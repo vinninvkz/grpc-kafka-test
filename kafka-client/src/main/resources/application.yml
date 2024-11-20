@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: kafka-client
+  datasource:
+    url: jdbc:postgresql://localhost:5450/mc2
+    username: mc2
+    password: mc2
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+#    bootstrap-servers: localhost:29092
+    bootstrap-servers: kafka:9092
+    consumer:
+        group-id: "id-group"
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+        properties:
+          spring:
+            json:
+              trusted:
+                packages: '*'
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        acks: 1
+        spring:
+          json:
+            add:
+              type:
+                headers: false
+
+topic:
+  lastname: lastname-event
+  id: id-event
+
+
+
+
+
